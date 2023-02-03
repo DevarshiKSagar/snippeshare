@@ -1,0 +1,16 @@
+int main() {
+    char address[] = "123 Main St, Springfield IL 62704";
+    char state[3];
+
+    // Find the starting position of the state identifier
+    char *p = strstr(address, " ");
+    while (p != NULL && *p != '\0') {
+        p = strstr(p + 1, " ");
+        if (p != NULL && *(p + 1) != '\0' && (*(p + 2) >= 'A' && *(p + 2) <= 'Z')) {
+            // Extract the two state identifying letters
+            state[0] = *(p + 1);
+            state[1] = *(p + 2);
+            state[2] = '\0';  // Null terminator
+            break;
+        }
+    }
