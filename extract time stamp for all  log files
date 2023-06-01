@@ -1,0 +1,23 @@
+$logFolderPath = "C:\path\to\your\log\folder"
+$pattern = "\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}"  # Regular expression pattern for timestamps
+
+# Get a list of all log files in the folder
+$logFiles = Get-ChildItem -Path $logFolderPath -Filter "*.log"
+
+foreach ($logFile in $logFiles) {
+    $logFilePath = $logFile.FullName
+
+    # Read the log file
+    $logContent = Get-Content -Path $logFilePath -Raw
+
+    # Find timestamps using regular expression
+    $matches = [regex]::Matches($logContent, $pattern)
+
+    # Extract and display the last timestamp
+    if ($matches.Count -gt 0) {
+        $lastTimestamp = $matches[-1].Value
+        Write-Output "Last Timestamp in $logFile: $lastTimestamp"
+    } else {
+        Write-Output "No timestamps found in $logFile."
+    }
+}
