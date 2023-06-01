@@ -1,0 +1,16 @@
+$logFilePath = "C:\path\to\your\logfile.log"
+$pattern = "Last Modified=\d{2}[A-Za-z]{3} \d{4}:(\d{2}:\d{2}:\d{2})"
+
+# Read the log file
+$logContent = Get-Content -Path $logFilePath -Raw
+
+# Find Last Modified timestamp using regular expression
+$match = [regex]::Match($logContent, $pattern)
+
+# Extract and display the time portion
+if ($match.Success) {
+    $time = $match.Groups[1].Value
+    Write-Output $time
+} else {
+    Write-Output "Time portion not found in the Last Modified timestamp."
+}
